@@ -36,6 +36,10 @@ public class RobotManager extends TimerTask {
      */
     private static void initRobot() {
 
+        /* Initialize wheel modules */
+
+
+        /* Initialize connection to XBox controller */
         XboxControllerManager.initXboxController();
 
     }
@@ -44,6 +48,25 @@ public class RobotManager extends TimerTask {
      * @brief Controls main looping of robot. Calls all tasks in appropriate order
      */
     private static void loopRobot() {
+
+        /* Tasks if robot is enabled */
+        if (robotEnabled) {
+
+            /* Disable robot if the controller is not connected */
+            if (!XboxControllerManager.isXboxControllerConnected()) {
+                disableRobot();
+                return;
+            }
+
+
+
+        }
+
+        /* Tasks if robot is disabled */
+        else {
+
+
+        }
 
     }
 
@@ -55,21 +78,25 @@ public class RobotManager extends TimerTask {
     }
 
     /**
-     * @brief Sets enabled state of robot
-     * @param enable: Boolean whether to enable or disable robot
+     * @brief Sets enabled state of robot to true
      */
-    public static void enableRobot(boolean enable) {
+    public static void enableRobot() {
 
-        /* Set enabled state of robot based on boolean parameter */
-        robotEnabled = enable;
+        /* Sets robot state to enabled */
+        robotEnabled = true;
     }
 
     /**
-     * @brief Gets whether robot is enabled or not
-     * @return Boolean whether robot is enabled
+     * @brief Performs all tasks necessary upon robot disabling
      */
-    public static boolean isRobotEnabled() {
-        return robotEnabled;
+    public static void disableRobot() {
+
+        /* Set state of robot to disabled */
+        robotEnabled = false;
+
+        /* Turn off all motors */
+        for (int i = 0; i < WheelModule.wheels.length; i++)
+            WheelModule.wheels[i].setMotorSpeed(0, 0);
     }
 
     @Override

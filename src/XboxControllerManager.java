@@ -17,9 +17,6 @@ public class XboxControllerManager extends Thread {
      */
     public static boolean initXboxController() {
 
-        /* Exit if the robot isn't enabled */
-        if (!RobotManager.isRobotEnabled())
-            return false;
 
         return true;
     }
