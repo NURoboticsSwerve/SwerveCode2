@@ -7,7 +7,7 @@ import com.fazecast.jSerialComm.SerialPort;
 public class SerialComm {
 
 	private static String incomingMsg;
-	private static HashMap<String, String> incomingData, outgoingData;
+	private static HashMap<String, Double> incomingData, outgoingData;
 	private static Timer timer = new Timer("Arduino Serial Comm Timer", true);
 	private static SerialPort comPort;
 	
@@ -35,7 +35,7 @@ public class SerialComm {
 							String[] keyValuePairs = incomingMsg.split(",");
 							for (String keyValue : keyValuePairs) {
 								String[] keyAndValue = keyValue.split("=");
-								incomingData.put(keyAndValue[0], keyAndValue[1]);
+								incomingData.put(keyAndValue[0], Double.parseDouble(keyAndValue[1]));
 							}
 							incomingMsg = "";
 						} else {
@@ -47,11 +47,11 @@ public class SerialComm {
 		}, 0, 5);
 	}
 	
-	public static String read(String key) {
+	public static double read(String key) {
 		return incomingData.get(key);
 	}
 	
-	public static void write(String key, String value) {
+	public static void write(String key, double value) {
 		outgoingData.put(key, value);
 	}
 }
