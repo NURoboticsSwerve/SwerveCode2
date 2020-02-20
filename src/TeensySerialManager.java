@@ -4,7 +4,13 @@ import java.util.TimerTask;
 
 import com.fazecast.jSerialComm.SerialPort;
 
-public class SerialComm {
+public class TeensySerialManager {
+
+	/*
+	 * CHARACTER SENSOR MEASUREMENT MAPPING
+	 * ------------------------------------
+	 * y = Robot Yaw (in radians)
+	 */
 
 	private static String incomingMsg;
 	private static HashMap<String, Double> incomingData, outgoingData;

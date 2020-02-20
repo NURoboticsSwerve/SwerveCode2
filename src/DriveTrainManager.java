@@ -22,11 +22,11 @@ public class DriveTrainManager {
 
             /* Calculate setpoints for velocity and angle */
             xVel = x + Math.sin(Math.atan2(WheelModule.wheels[i].getRotXDefault(),
-                                            WheelModule.wheels[i].getRotYDefault()) /*+
-                                SerialComm.read("robot angle")*/);
+                                            WheelModule.wheels[i].getRotYDefault()) +
+                                TeensySerialManager.read("y"));
             yVel = y + Math.cos(Math.atan2(WheelModule.wheels[i].getRotXDefault(),
-                                            WheelModule.wheels[i].getRotYDefault()) /*+
-                                SerialComm.read("robot angle")*/);
+                                            WheelModule.wheels[i].getRotYDefault()) +
+                                TeensySerialManager.read("y"));
             vel = Math.sqrt(Math.pow(xVel, 2) + Math.pow(yVel, 2.0));
             ang = Math.atan2(xVel, yVel);
 

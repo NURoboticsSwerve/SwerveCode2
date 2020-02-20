@@ -2,10 +2,14 @@
 public class WheelModule {
 
     public static final double MAX_GEAR_SPEED = 0;
+    // Angle at which the (angle off)^2 function hits vel percent of 1.00
+    public static final double MAX_ANG_VEL_ANGLE = Math.PI;
+    // Minimum angular velocity percent needed to have module move (overcome static friction )
+    public static final double MIN_ANG_VEL_PERCENT = 0.03;
 
     private double topEncoderSpeed, botEncoderSpeed, topGearSetpoint, botGearSetpoint;
     private double encoderAngle, velSetpoint, angVelSetpoint, angSetpoint;
-    private short rotXDefault = 1, rotYDefault = 1;
+    private int rotXDefault = 1, rotYDefault = 1;
 
     /* Initialize wheels and enum that corresponds to wheel */
     public static WheelModule wheels[] = new WheelModule[4];
@@ -47,16 +51,24 @@ public class WheelModule {
     }
 
     /**
+     * @brief Uses difference between robot angle setpoint and current robot angle to find module angular velocity setpoing
+     */
+    public void findAngVelSetpoint() {
+        double angDifRad = TeensySerialManager.read("C") - angSetpoint;
+
+    }
+
+    /**
      * @brief Gets default rotation sign multiplier in x direction
      */
-    public short getRotXDefault() {
+    public int getRotXDefault() {
         return rotXDefault;
     }
 
     /**
      * @brief Gets default rotation sign multiplier in y direction
      */
-    public short getRotYDefault() {
+    public int getRotYDefault() {
         return rotYDefault;
     }
 
