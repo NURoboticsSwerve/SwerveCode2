@@ -5,18 +5,22 @@ public class WheelModule {
 
     private double topEncoderSpeed, botEncoderSpeed, topGearSetpoint, botGearSetpoint;
     private double encoderAngle, velSetpoint, angVelSetpoint, angSetpoint;
-    private short rotXDefault, rotYDefault;
+    private short rotXDefault = 1, rotYDefault = 1;
 
+    /* Initialize wheels and enum that corresponds to wheel */
     public static WheelModule wheels[] = new WheelModule[4];
+    public static enum wheelLocation {frontLeft, frontRight, backLeft, backRight};
 
     /**
      * @brief Constructor to create new wheel module object
-     * @param rotXDefault: Default x rotation multiplier (-1 or 1)
-     * @param rotYDefault: Default y rotation multiplier (-1 or 1)
+     * @param rotXDefaultPos: Whether x rotation multiplier is positive
+     * @param rotYDefaultPos: Whether y rotation multiplier is positive
      */
-    public WheelModule(short rotXDefault, short rotYDefault) {
-        this.rotXDefault = rotXDefault;
-        this.rotYDefault = rotYDefault;
+    public WheelModule(boolean rotXDefaultPos, boolean rotYDefaultPos) {
+        if (!rotXDefaultPos)
+            rotXDefault = -1;
+        if (!rotYDefaultPos)
+            rotYDefault = -1;
     }
 
     /**
@@ -40,7 +44,6 @@ public class WheelModule {
      * @brief Uses velocity and angular velocity setpoints to find top and bottom gear velocity setpoints
      */
     public void findGearSpeeds() {
-
     }
 
     /**

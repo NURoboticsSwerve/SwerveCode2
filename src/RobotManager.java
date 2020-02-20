@@ -37,11 +37,13 @@ public class RobotManager extends TimerTask {
     private static void initRobot() {
 
         /* Initialize wheel modules */
-
+        WheelModule.wheels[WheelModule.wheelLocation.frontLeft.ordinal()] = new WheelModule(true, true);
+        WheelModule.wheels[WheelModule.wheelLocation.frontRight.ordinal()] = new WheelModule(true, false);
+        WheelModule.wheels[WheelModule.wheelLocation.backLeft.ordinal()] = new WheelModule(false, true);
+        WheelModule.wheels[WheelModule.wheelLocation.backRight.ordinal()] = new WheelModule(false, false);
 
         /* Initialize connection to XBox controller */
         XboxControllerManager.initXboxController();
-
     }
 
     /**

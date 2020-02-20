@@ -22,13 +22,15 @@ public class DriveTrainManager {
 
             /* Calculate setpoints for velocity and angle */
             xVel = x + Math.sin(Math.atan2(WheelModule.wheels[i].getRotXDefault(),
-                                            WheelModule.wheels[i].getRotYDefault()));
+                                            WheelModule.wheels[i].getRotYDefault()) /*+
+                                SerialComm.read("robot angle")*/);
             yVel = y + Math.cos(Math.atan2(WheelModule.wheels[i].getRotXDefault(),
-                                            WheelModule.wheels[i].getRotYDefault()));
-
+                                            WheelModule.wheels[i].getRotYDefault()) /*+
+                                SerialComm.read("robot angle")*/);
             vel = Math.sqrt(Math.pow(xVel, 2) + Math.pow(yVel, 2.0));
             ang = Math.atan2(xVel, yVel);
 
+            /* Set wheel setpoints for the given wheel */
             WheelModule.wheels[i].setVelSetpoint(vel);
             WheelModule.wheels[i].setAngSetpoint(ang);
         }
