@@ -1,14 +1,17 @@
 
 public class WheelModule {
 
-    public static final double MAX_GEAR_SPEED = 0;
+    public static final double WHEEL_RADIUS = 1; // In meters
+    public static final double MAX_GEAR_SPEED = 1; // In rad/s
     // Angle at which the (angle off)^2 function hits vel percent of 1.00
     public static final double MAX_ANG_VEL_ANGLE = Math.PI;
     // Minimum angular velocity percent needed to have module move (overcome static friction )
     public static final double MIN_ANG_VEL_PERCENT = 0.03;
+    // Gear ratio from sandwich gear (inner) to bevel gear (floating gear)
+    public static final double SANDWICH_BEVEL_RATIO = 82.0/21;
 
-    private double topEncoderSpeed, botEncoderSpeed, topGearSetpoint, botGearSetpoint;
-    private double encoderAngle, velSetpoint, angVelSetpoint, angSetpoint;
+    private double topEncoderSpeed, botEncoderSpeed, topGearSetpoint, botGearSetpoint; // m/s (2), % (2)
+    private double encoderAngle, velSetpoint, angVelSetpoint, angSetpoint; // rad, %, %, rad
     private int rotXDefault = 1, rotYDefault = 1;
 
     /* Initialize wheels and enum that corresponds to wheel */
@@ -42,6 +45,8 @@ public class WheelModule {
      */
     public void findModuleSpeeds() {
 
+        this.angVelSetpoint = (this.topGearSetpoint + this.botGearSetpoint) / 2;
+        this.velSetpoint = (-this.topGearSetpoint + this.botGearSetpoint) / 2;
     }
 
     /**
@@ -49,6 +54,8 @@ public class WheelModule {
      */
     public void findGearSpeeds() {
 
+        this.topGearSetpoint = this.angVelSetpoint + this.velSetpoint;
+        this.botGearSetpoint = this.angVelSetpoint - this.velSetpoint;
     }
 
     /**
