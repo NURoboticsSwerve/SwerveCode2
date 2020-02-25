@@ -48,6 +48,7 @@ public class WheelModule {
      * @brief Uses velocity and angular velocity setpoints to find top and bottom gear velocity setpoints
      */
     public void findGearSpeeds() {
+
     }
 
     /**
@@ -55,7 +56,9 @@ public class WheelModule {
      */
     public void findAngVelSetpoint() {
         double angDifRad = TeensySerialManager.read("C") - angSetpoint;
-
+        this.angVelSetpoint = (1 - MIN_ANG_VEL_PERCENT) * Math.pow(angDifRad / MAX_ANG_VEL_ANGLE, 2) + MIN_ANG_VEL_PERCENT;
+        this.angVelSetpoint = Math.min(1, this.angVelSetpoint);
+        this.angVelSetpoint *= Math.signum(angDifRad);
     }
 
     /**
