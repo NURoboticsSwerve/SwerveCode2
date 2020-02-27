@@ -10,13 +10,16 @@ public class WheelModule {
     // Gear ratio from sandwich gear (inner) to bevel gear (floating gear)
     public static final double SANDWICH_BEVEL_RATIO = 82.0/21;
 
+    // Feedback variables
+    public static final double MIN_GEAR_MOVE_PERCENT = 0;
+
     private double topEncoderSpeed, botEncoderSpeed, topGearSetpoint, botGearSetpoint; // m/s (2), % (2)
     private double encoderAngle, velSetpoint, angVelSetpoint, angSetpoint; // rad, %, %, rad
     private int rotXDefault = 1, rotYDefault = 1;
 
     /* Initialize wheels and enum that corresponds to wheel */
     public static WheelModule wheels[] = new WheelModule[4];
-    public static enum wheelLocation {frontLeft, frontRight, backLeft, backRight};
+    public enum wheelLocation {frontLeft, frontRight, backLeft, backRight};
 
     /**
      * @brief Constructor to create new wheel module object
@@ -30,13 +33,19 @@ public class WheelModule {
             rotYDefault = -1;
     }
 
+    /* Change gear setpoints to reflect actual percentage sent to motors after adjusting for min move percentage */
+    public void adjustSetpointFeedForward() {
+        this.topGearSetpoint = this.topGearSetpoint * (1 - MIN_GEAR_MOVE_PERCENT) + MIN_GEAR_MOVE_PERCENT;
+        this.botGearSetpoint = this.botGearSetpoint * (1 - MIN_GEAR_MOVE_PERCENT) + MIN_GEAR_MOVE_PERCENT;
+    }
+
     /**
      * @brief Sets the motor speeds of a wheel module at the motor controller level
      *
      * @param topPercent: Percent of max speed to set top gear as
      * @param botPercent: Percent of max speed to set bottom gear as
      */
-    void setMotorSpeed(double topPercent, double botPercent) {
+    public void setMotorSpeed(double topPercent, double botPercent) {
 
     }
 
@@ -80,6 +89,20 @@ public class WheelModule {
      */
     public int getRotYDefault() {
         return rotYDefault;
+    }
+
+    /**
+     * @brief Gets current setpoint of top gear (-1 to 1)
+     */
+    public double getTopGearSetpoint() {
+        return this.topGearSetpoint;
+    }
+
+    /**
+     * @brief Gets current setpoint of bottom gear (-1 to 1)
+     */
+    public double getBotGearSetpoint() {
+        return this.botGearSetpoint;
     }
 
     /**

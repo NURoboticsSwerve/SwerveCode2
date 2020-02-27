@@ -14,7 +14,7 @@ public class DriveTrainManager {
      * @param y: Robot y velocity setpoint 0-1
      * @param rot: Robot rotational velocity setpoint 0-1
      */
-    static void findModuleSpeeds(double x, double y, double rot) {
+    public static void findModuleSpeeds(double x, double y, double rot) {
 
         double xVel, yVel, vel, ang;
 
@@ -41,7 +41,25 @@ public class DriveTrainManager {
      * @brief Finds maximum gear percent setpoint of all wheels' gears
      * If max percent > 1, divides all gear percentages to be less than 1
      */
-    static void limitMaxGearSpeed() {
+    public static void limitMaxGearSpeed() {
+
+        /* Find the maximum gear setpoint */
+        double maxGearSetpoint = 0;
+        for (int i = 0; i < WheelModule.wheels.length; i++) {
+            if (Math.abs(WheelModule.wheels[i].getTopGearSetpoint()) > maxGearSetpoint)
+                maxGearSetpoint = Math.abs(WheelModule.wheels[i].getTopGearSetpoint());
+            else if (Math.abs(WheelModule.wheels[i].getBotGearSetpoint()) > maxGearSetpoint)
+                maxGearSetpoint = Math.abs(WheelModule.wheels[i].getBotGearSetpoint());
+        }
+
+        /* Find what to divide all the gear setpoints by */
+        double divisor = Math.min(maxGearSetpoint, 1);
+
+        /* Divide all gear setpoints by divisor */
+        for (int i = 0; i < WheelModule.wheels.length; i++) {
+            WheelModule.wheels[i].setTopGearSetpoint(WheelModule.wheels[i].getTopGearSetpoint() / divisor);
+            WheelModule.wheels[i].setBotGearSetpoint(WheelModule.wheels[i].getBotGearSetpoint() / divisor);
+        }
 
     }
 

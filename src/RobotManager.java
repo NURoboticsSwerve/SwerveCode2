@@ -60,7 +60,30 @@ public class RobotManager extends TimerTask {
                 return;
             }
 
+            /* Get Xbox joystick values */
+            double velX = XboxControllerManager.getXboxLeftX();
+            double velY = XboxControllerManager.getXboxLeftY();
+            double rot = XboxControllerManager.getXboxRightX();
 
+            /* Calculate wheel speeds and rotational velocity from Xbox inputs */
+            DriveTrainManager.findModuleSpeeds(velX, velY, rot);
+
+            /* Find angular velocity setpoint and gear setpoint of all wheels */
+            for (WheelModule wheel : WheelModule.wheels) {
+                wheel.findAngVelSetpoint();
+                wheel.findGearSpeeds();
+            }
+
+            /* Scale all gear speeds to a maximum of 1 */
+            DriveTrainManager.limitMaxGearSpeed();
+
+            /* Get new wheel module speed and angular velocity setpoints from gear setpoints */
+            for (WheelModule wheel : WheelModule.wheels) {
+                wheel.findModuleSpeeds();
+                wheel.adjustSetpointFeedForward();
+            }
+
+            // TODO: Get sensor feedback and use as PID input
 
         }
 

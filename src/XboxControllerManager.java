@@ -33,7 +33,7 @@ public class XboxControllerManager extends Thread {
      * @brief Gets value of xbox controller left joystick x axis
      * @return Value 0-1
      */
-    public synchronized double getXboxLeftX() {
+    public static synchronized double getXboxLeftX() {
         return xboxLeftX;
     }
 
@@ -41,7 +41,7 @@ public class XboxControllerManager extends Thread {
      * @brief Gets value of xbox controller right joystick y axis
      * @return Value 0-1
      */
-    public synchronized double getXboxLeftY() {
+    public static synchronized double getXboxLeftY() {
         return xboxLeftY;
     }
 
@@ -49,28 +49,28 @@ public class XboxControllerManager extends Thread {
      * @brief Gets value of xbox controller right joystick x axis
      * @return Value 0-1
      */
-    public synchronized double getXboxRightX() {
+    public static synchronized double getXboxRightX() {
         return xboxRightX;
     }
 
     /**
      * @brief Sets xbox controller left x axis value
      */
-    public synchronized void setXboxLeftX() {
+    public static synchronized void setXboxLeftX() {
 
     }
 
     /**
      * @brief Sets xbox controller left y axis value
      */
-    public synchronized void setXboxLeftY() {
+    public static synchronized void setXboxLeftY() {
 
     }
 
     /**
      * @brief Sets xbox controller right x axis value
      */
-    public synchronized void setXboxRightX() {
+    public static synchronized void setXboxRightX() {
 
     }
 
