@@ -6,18 +6,22 @@ import java.util.TimerTask;
  *
  * @brief Controls all initializations and loops
  * Starts necessary threads
+ *
+ * TODO: Connection test with Teensy on initialization
  */
 public class RobotManager extends TimerTask {
 
+    /* Period of main robot loop */
     private static final long LOOP_PERIOD_MS = 10;
 
+    /* Declarations of helpers variables */
     private final Timer mainTimer;
     private static boolean robotEnabled;
 
     /**
      * @brief Constructor that creates new TimerTask
      */
-    public RobotManager() {
+    private RobotManager() {
 
         /* Initialize robot */
         initRobot();
@@ -43,7 +47,9 @@ public class RobotManager extends TimerTask {
         WheelModule.wheels[WheelModule.wheelLocation.backRight.ordinal()] = new WheelModule(false, false);
 
         /* Initialize connection to XBox controller */
-        XboxControllerManager.initXboxController();
+        while (!XboxControllerManager.initXboxController()) {
+            // Send information through GUI
+        }
     }
 
     /**
@@ -83,13 +89,20 @@ public class RobotManager extends TimerTask {
                 wheel.adjustSetpointFeedForward();
             }
 
-            // TODO: Get sensor feedback and use as PID input
-
+            // TODO: Get sensor feedback and use as PID inputs
         }
 
         /* Tasks if robot is disabled */
         else {
 
+            /* If not connected to xbox controller, try connecting and stop if unsuccessful */
+            if (!XboxControllerManager.isXboxControllerConnected()) {
+                if(!XboxControllerManager.initXboxController()) {
+                    return;
+                }
+            }
+
+            // TODO: Check if enabled button on controller has been hit
 
         }
 
@@ -125,9 +138,6 @@ public class RobotManager extends TimerTask {
     }
 
     @Override
-    /**
-     * @brief Runs loopRobot every LOOP_PERIOD_MS
-     */
     public void run() {
         loopRobot();
     }

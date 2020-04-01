@@ -1,12 +1,16 @@
 
 public class WheelModule {
 
-    public static final double WHEEL_RADIUS = 1; // In meters
-    public static final double MAX_GEAR_SPEED = 1; // In rad/s
+    public static final double WHEEL_RADIUS = 0; // In meters
+
+    public static final double MAX_GEAR_SPEED = 0; // In rad/s
+
     // Angle at which the (angle off)^2 function hits vel percent of 1.00
     public static final double MAX_ANG_VEL_ANGLE = Math.PI;
+
     // Minimum angular velocity percent needed to have module move (overcome static friction )
-    public static final double MIN_ANG_VEL_PERCENT = 0.03;
+    public static final double MIN_ANG_VEL_PERCENT = 0.0;
+
     // Gear ratio from sandwich gear (inner) to bevel gear (floating gear)
     public static final double SANDWICH_BEVEL_RATIO = 82.0/21;
 

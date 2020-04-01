@@ -8,7 +8,7 @@ public class DriveTrainManager {
 
     /**
      * @brief Given robot theoretical setpoints
-     * Finds WheelModule velocity setpoint and angle setpoint for each wheel (relative to field centric)
+     * Finds WheelModule velocity setpoint and angle setpoint for each wheel (relative to original 0)
      *
      * @param x: Robot x velocity setpoint 0-1
      * @param y: Robot y velocity setpoint 0-1
@@ -23,10 +23,10 @@ public class DriveTrainManager {
             /* Calculate setpoints for velocity and angle */
             xVel = x + Math.sin(Math.atan2(WheelModule.wheels[i].getRotXDefault(),
                                             WheelModule.wheels[i].getRotYDefault()) +
-                                TeensySerialManager.read("y"));
+                                TeensySerialManager.read(TeensySerialManager.ROBOT_YAW));
             yVel = y + Math.cos(Math.atan2(WheelModule.wheels[i].getRotXDefault(),
                                             WheelModule.wheels[i].getRotYDefault()) +
-                                TeensySerialManager.read("y"));
+                                TeensySerialManager.read(TeensySerialManager.ROBOT_YAW));
             vel = Math.sqrt(Math.pow(xVel, 2) + Math.pow(yVel, 2.0));
             ang = Math.atan2(xVel, yVel);
 
@@ -60,7 +60,5 @@ public class DriveTrainManager {
             WheelModule.wheels[i].setTopGearSetpoint(WheelModule.wheels[i].getTopGearSetpoint() / divisor);
             WheelModule.wheels[i].setBotGearSetpoint(WheelModule.wheels[i].getBotGearSetpoint() / divisor);
         }
-
     }
-
 }

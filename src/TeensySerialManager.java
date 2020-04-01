@@ -11,6 +11,7 @@ public class TeensySerialManager {
 	 * ------------------------------------
 	 * y = Robot Yaw (in radians)
 	 */
+	public static final String ROBOT_YAW = "y";
 
 	private static String incomingMsg;
 	private static HashMap<String, Double> incomingData, outgoingData;
